@@ -13,6 +13,7 @@
 
   "permissions": [
       "webNavigation",
-      "history"
+      "history",
+      "tabs"
   ]
 }

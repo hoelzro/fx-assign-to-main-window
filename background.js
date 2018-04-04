@@ -37,4 +37,6 @@ browser.webNavigation.onBeforeNavigate.addListener((details) => {
     previousBeforeNavigateByTab[details.tabId] = details.url;
 });
 
-// XXX clean up previousBeforeNavigateByTab
+browser.tabs.onRemoved.addListener((tabId, _) => {
+    delete previousBeforeNavigateByTab[tabId];
+});
