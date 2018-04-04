@@ -1,4 +1,4 @@
-browser.webNavigation.onCommitted.addListener(details => {
+browser.webNavigation.onCommitted.addListener(async (details) => {
     if(details.transitionType != 'link') {
         return;
     }
@@ -6,5 +6,13 @@ browser.webNavigation.onCommitted.addListener(details => {
         return;
     }
 
-    console.log(details);
+    let visits = await browser.history.getVisits({
+        url: details.url
+    });
+
+    if(visits.length == 0) {
+        return;
+    }
+
+    let latestVisit = visits[0];
 });
