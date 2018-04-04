@@ -1,0 +1,7 @@
+{
+  "manifest_version": 2,
+  "name": "Window Assignment Spike",
+  "version": "1.0",
+  "author": "Rob Hoelz",
+  "description": "Trying to get tabs from external sources to go to a main window"
+}
