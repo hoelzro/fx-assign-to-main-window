@@ -11,6 +11,9 @@ browser.webNavigation.onCommitted.addListener(async (details) => {
     if(hitNewTab[details.tabId]) {
         return;
     }
+    if(details.url.startsWith('moz-extension://')) {
+        return;
+    }
 
     let wasRedirect = details.transitionQualifiers.includes('server_redirect');
 
