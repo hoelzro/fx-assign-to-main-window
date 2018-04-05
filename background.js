@@ -36,7 +36,17 @@ browser.webNavigation.onCommitted.addListener(async (details) => {
     let latestVisit = visits[0];
 
     if(latestVisit.referringVisitId == -1) {
-        console.log('from external!');
+        let windows = await browser.windows.getAll({
+            populate: false,
+            windowTypes: ['normal'],
+        });
+        let mainWindowId = windows.map(w => w.id).reduce((accum, value) => Math.min(accum, value));
+        if(details.windowId != mainWindowId) {
+            browser.tabs.move(details.tabId, {
+                windowId: mainWindowId,
+                index: -1,
+            });
+        }
     }
 });
 
