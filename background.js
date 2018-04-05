@@ -1,10 +1,14 @@
 let previousBeforeNavigateByTab = {};
+let hitNewTab = {};
 
 browser.webNavigation.onCommitted.addListener(async (details) => {
     if(details.transitionType != 'link') {
         return;
     }
     if(details.transitionQualifiers.includes('forward_back')) {
+        return;
+    }
+    if(hitNewTab[details.tabId]) {
         return;
     }
 
@@ -39,4 +43,11 @@ browser.webNavigation.onBeforeNavigate.addListener((details) => {
 
 browser.tabs.onRemoved.addListener((tabId, _) => {
     delete previousBeforeNavigateByTab[tabId];
+    delete hitNewTab[tabId];
+});
+
+browser.tabs.onCreated.addListener(tab => {
+    if(tab.url == 'about:newtab') {
+        hitNewTab[tab.id] = true;
+    }
 });
